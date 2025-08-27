@@ -100,5 +100,66 @@ admin.site.register(ThirdPartyDataTransfer, ThirdPartyDataTransferAdmin)
 admin.site.register(Certificates, CertificatesAdmin)
 admin.site.register(SiteContent, SiteContentAdmin)
 
+# Админка для новых моделей
+class SalonUserAdmin(admin.ModelAdmin):
+    list_display = ('user', 'phone', 'gender', 'is_vip', 'created_at')
+    list_filter = ('gender', 'is_vip', 'created_at')
+    search_fields = ('user__username', 'user__first_name', 'user__last_name', 'phone')
+    readonly_fields = ('created_at', 'updated_at')
+    fieldsets = (
+        ('Основная информация', {
+            'fields': ('user', 'phone', 'gender', 'birth_date')
+        }),
+        ('Дополнительно', {
+            'fields': ('address', 'notes', 'is_vip')
+        }),
+        ('Система', {
+            'fields': ('created_at', 'updated_at'),
+            'classes': ('collapse',)
+        }),
+    )
+
+class AppointmentAdmin(admin.ModelAdmin):
+    list_display = ('user', 'service', 'appointment_date', 'status', 'created_at')
+    list_filter = ('status', 'appointment_date', 'created_at')
+    search_fields = ('user__user__username', 'service__service_title')
+    readonly_fields = ('created_at',)
+    date_hierarchy = 'appointment_date'
+    fieldsets = (
+        ('Запись', {
+            'fields': ('user', 'service', 'appointment_date', 'status')
+        }),
+        ('Дополнительно', {
+            'fields': ('notes',)
+        }),
+        ('Система', {
+            'fields': ('created_at',),
+            'classes': ('collapse',)
+        }),
+    )
+
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ('user', 'service', 'rating', 'is_approved', 'created_at')
+    list_filter = ('rating', 'is_approved', 'created_at')
+    search_fields = ('user__user__username', 'text')
+    readonly_fields = ('created_at',)
+    list_editable = ('is_approved',)
+    fieldsets = (
+        ('Отзыв', {
+            'fields': ('user', 'service', 'rating', 'text')
+        }),
+        ('Модерация', {
+            'fields': ('is_approved',)
+        }),
+        ('Система', {
+            'fields': ('created_at',),
+            'classes': ('collapse',)
+        }),
+    )
+
+admin.site.register(SalonUser, SalonUserAdmin)
+admin.site.register(Appointment, AppointmentAdmin)
+admin.site.register(Review, ReviewAdmin)
+
 admin.site.site_title = 'Queen Cosmo'
 admin.site.site_header = 'Админ-панель: Queen Cosmo'

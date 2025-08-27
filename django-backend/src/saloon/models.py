@@ -146,4 +146,78 @@ class SiteContent(models.Model):
         verbose_name_plural = '6) Для мета-тега'
 
     def __str__(self):
-        return self.page_name
+        return str(self.page_name)
+
+# Модель пользователя салона красоты
+class SalonUser(models.Model):
+    GENDER_CHOICES = [
+        ('F', 'Женский'),
+        ('M', 'Мужской'),
+    ]
+    
+    user = models.OneToOneField('auth.User', on_delete=models.CASCADE, verbose_name="Пользователь Django")
+    phone = models.CharField(max_length=20, verbose_name="Телефон", blank=True)
+    birth_date = models.DateField(verbose_name="Дата рождения", null=True, blank=True)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES, verbose_name="Пол", blank=True)
+    address = models.TextField(verbose_name="Адрес", blank=True)
+    notes = models.TextField(verbose_name="Заметки", blank=True)
+    is_vip = models.BooleanField(default=False, verbose_name="VIP клиент")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата регистрации")
+    updated_at = models.DateTimeField(auto_now=True, verbose_name="Дата обновления")
+    
+    def __str__(self):
+        return f"{self.user.get_full_name() or self.user.username} ({self.phone or 'без телефона'})"
+    
+    class Meta:
+        verbose_name = 'Пользователь салона'
+        verbose_name_plural = '7) Пользователи салона'
+        ordering = ['-created_at']
+
+# Модель записи на услуги
+class Appointment(models.Model):
+    STATUS_CHOICES = [
+        ('pending', 'Ожидает подтверждения'),
+        ('confirmed', 'Подтверждено'),
+        ('completed', 'Завершено'),
+        ('cancelled', 'Отменено'),
+    ]
+    
+    client = models.ForeignKey(SalonUser, on_delete=models.CASCADE, verbose_name="Клиент")
+    service = models.ForeignKey(PriceList, on_delete=models.CASCADE, verbose_name="Услуга")
+    appointment_date = models.DateTimeField(verbose_name="Дата и время записи")
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending', verbose_name="Статус")
+    notes = models.TextField(verbose_name="Заметки", blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания записи")
+    
+    def __str__(self):
+        return f"{self.user} - {self.service} на {self.appointment_date.strftime('%d.%m.%Y %H:%M')}"
+    
+    class Meta:
+        verbose_name = 'Запись на услугу'
+        verbose_name_plural = '8) Записи на услуги'
+        ordering = ['-appointment_date']
+
+# Модель отзывов
+class Review(models.Model):
+    RATING_CHOICES = [
+        (1, '1 звезда'),
+        (2, '2 звезды'),
+        (3, '3 звезды'),
+        (4, '4 звезды'),
+        (5, '5 звезд'),
+    ]
+    
+    user = models.ForeignKey(SalonUser, on_delete=models.CASCADE, verbose_name="Автор отзыва")
+    service = models.ForeignKey(PriceList, on_delete=models.CASCADE, verbose_name="Услуга", null=True, blank=True)
+    rating = models.IntegerField(choices=RATING_CHOICES, verbose_name="Оценка")
+    text = models.TextField(verbose_name="Текст отзыва")
+    is_approved = models.BooleanField(default=False, verbose_name="Одобрен")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Дата создания")
+    
+    def __str__(self):
+        return f"{self.user} - {self.rating} звезд - {self.text[:50]}..."
+    
+    class Meta:
+        verbose_name = 'Отзыв'
+        verbose_name_plural = '9) Отзывы'
+        ordering = ['-created_at']

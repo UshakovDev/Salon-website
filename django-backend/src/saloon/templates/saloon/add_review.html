@@ -1,0 +1,132 @@
+{% extends 'saloon/index.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container" style="min-height: 60vh; padding: 50px 0;">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow">
+                <div class="card-header text-center">
+                    <h2>Оставить отзыв</h2>
+                </div>
+                <div class="card-body">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            <label for="service" class="form-label">Услуга (необязательно)</label>
+                            <select class="form-control" id="service" name="service">
+                                <option value="">Общий отзыв</option>
+                                {% for service in form.fields.service.queryset %}
+                                    <option value="{{ service.id }}">{{ service.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label">Оценка</label>
+                            <div class="rating-stars">
+                                {% for i in "12345" %}
+                                <input type="radio" name="rating" id="star{{ forloop.counter }}" value="{{ forloop.counter }}" required>
+                                <label for="star{{ forloop.counter }}" class="star-label">
+                                    <i class="fas fa-star"></i>
+                                </label>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="text" class="form-label">Текст отзыва</label>
+                            <textarea class="form-control" id="text" name="text" rows="6" 
+                                      placeholder="Поделитесь своими впечатлениями об услуге или салоне в целом..." required></textarea>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">Отправить отзыв</button>
+                        </div>
+                    </form>
+                    
+                    <div class="text-center mt-3">
+                        <a href="{% url 'profile' %}" class="btn btn-outline-secondary">Вернуться в профиль</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.card {
+    border: none;
+    border-radius: 15px;
+}
+.card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 15px 15px 0 0 !important;
+    padding: 20px;
+}
+.card-body {
+    padding: 30px;
+}
+.form-control {
+    border-radius: 10px;
+    border: 2px solid #e9ecef;
+    padding: 12px 15px;
+    transition: all 0.3s ease;
+}
+.form-control:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 10px;
+    padding: 12px 30px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.rating-stars {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 5px;
+}
+
+.rating-stars input[type="radio"] {
+    display: none;
+}
+
+.star-label {
+    cursor: pointer;
+    font-size: 2rem;
+    color: #ddd;
+    transition: color 0.2s ease;
+}
+
+.star-label:hover,
+.star-label:hover ~ .star-label,
+.rating-stars input[type="radio"]:checked ~ .star-label {
+    color: #ffc107;
+}
+
+.rating-stars input[type="radio"]:checked ~ .star-label {
+    color: #ffc107;
+}
+</style>
+{% endblock %}

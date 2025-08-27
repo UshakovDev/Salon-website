@@ -167,16 +167,27 @@ SESSION_COOKIE_SECURE = False
 CSRF_COOKIE_HTTPONLY = False
 SESSION_COOKIE_HTTPONLY = False
 
+# Настройки CSRF для разработки
+CSRF_USE_SESSIONS = False
+CSRF_COOKIE_NAME = 'csrftoken'
+CSRF_COOKIE_AGE = 31449600  # 1 год
+CSRF_COOKIE_DOMAIN = None
+CSRF_COOKIE_PATH = '/'
+CSRF_COOKIE_SAMESITE = 'Lax'
+
+# Настройки сессий для разработки
+SESSION_COOKIE_AGE = 1209600  # 2 недели
+SESSION_COOKIE_DOMAIN = None
+SESSION_COOKIE_PATH = '/'
+SESSION_COOKIE_SAMESITE = 'Lax'
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
 # Отключение проверки CSRF для разработки (осторожно!)
 if DEBUG:
     CSRF_COOKIE_SECURE = False
     SESSION_COOKIE_SECURE = False
     CSRF_COOKIE_HTTPONLY = False
     SESSION_COOKIE_HTTPONLY = False
-    
-    # В режиме отладки можно отключить проверку CSRF (только для разработки!)
-    # CSRF_USE_SESSIONS = False
-    # CSRF_COOKIE_NAME = 'csrftoken'
 
 #        "LOCATION": "/var/tmp/django_cache",
 

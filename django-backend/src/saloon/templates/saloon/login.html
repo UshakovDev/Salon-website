@@ -1,0 +1,31 @@
+{% extends 'saloon/base_form.html' %}
+
+{% block form_content %}
+<form method="post">
+    {% csrf_token %}
+    
+    <div class="mb-3">
+        <label for="{{ form.username.id_for_label }}" class="form-label">{{ form.username.label }}</label>
+        {{ form.username }}
+        {% if form.username.errors %}
+            <div class="text-danger">{{ form.username.errors }}</div>
+        {% endif %}
+    </div>
+    
+    <div class="mb-3">
+        <label for="{{ form.password.id_for_label }}" class="form-label">{{ form.password.label }}</label>
+        {{ form.password }}
+        {% if form.password.errors %}
+            <div class="text-danger">{{ form.password.errors }}</div>
+        {% endif %}
+    </div>
+    
+    <div class="d-grid gap-2">
+        <button type="submit" class="btn btn-primary">Войти</button>
+    </div>
+    
+    <div class="text-center mt-3">
+        <p>Нет аккаунта? <a href="{% url 'register' %}">Зарегистрироваться</a></p>
+    </div>
+</form>
+{% endblock %}
