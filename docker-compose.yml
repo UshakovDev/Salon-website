@@ -4,7 +4,7 @@ services:
     build:
         context: ./nginx
     ports:
-        - "8080:80" # port exposed to outside world
+        - "8080:80"
         
     volumes:
         - ./persistentdata/certbot/conf:/etc/letsencrypt # <--here
