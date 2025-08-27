@@ -23,5 +23,5 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PYTHONPATH=/app/src
 
-# Запускаем Gunicorn
-CMD ["gunicorn", "-w", "3", "--chdir", "./src", "proj.wsgi:application", "--bind", "0.0.0.0:8000"]
+# Запускаем Gunicorn с автоматической перезагрузкой для разработки
+CMD ["gunicorn", "-w", "3", "--chdir", "./src", "proj.wsgi:application", "--bind", "0.0.0.0:8000", "--reload"]

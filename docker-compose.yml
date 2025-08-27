@@ -29,6 +29,12 @@ services:
         - ./persistentdata/robots.txt:/var/www/robots.txt
         - ./persistentdata/favicon.svg:/var/www/favicon.svg
         
+        # Для разработки - автоматическое обновление Python кода
+        - ./django-backend/src:/app/src
+        
+    environment:
+        - DJANGO_DEBUG=True
+        - DJANGO_AUTO_RELOAD=True
       
   postgresql-db:
     restart: always
