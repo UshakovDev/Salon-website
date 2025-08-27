@@ -240,6 +240,7 @@ python3 generate_secrets.py
 - **[TEST_DATA_README.md](TEST_DATA_README.md)** - заполнение тестовыми данными
 - **[HTTPS_SETUP.md](HTTPS_SETUP.md)** - настройка HTTPS и SSL сертификатов
 - **[docker-compose.yml](docker-compose.yml)** - конфигурация Docker сервисов
+- **[LICENSE](LICENSE)** - лицензия MIT
 
 ### **🐳 Docker документация**
 - **[django-backend/Dockerfile](django-backend/Dockerfile)** - образ Django приложения
@@ -270,6 +271,7 @@ Salon-website/
 ├── 📝 TEST_DATA_README.md          # Заполнение тестовыми данными
 ├── 🌐 HTTPS_SETUP.md               # Настройка HTTPS
 ├── 🐳 docker-compose.yml           # Docker конфигурация
+├── 📄 LICENSE                      # Лицензия MIT
 ├── 🐍 django-backend/              # Django приложение
 │   ├── 📁 src/                     # Исходный код
 │   │   ├── 📁 proj/                # Настройки проекта
@@ -342,4 +344,4 @@ cat .gitignore | grep -E "(locals_vars|\.pg-env|\.env)"
 
 ## 📄 **Лицензия**
 
-Этот проект распространяется под лицензией MIT. См. файл `LICENSE` для подробностей.
+Этот проект распространяется под лицензией MIT. См. файл [LICENSE](LICENSE) для подробностей.
