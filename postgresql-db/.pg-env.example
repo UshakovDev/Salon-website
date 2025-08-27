@@ -1,0 +1,14 @@
+# Шаблон переменных окружения для PostgreSQL
+# Скопируйте этот файл в .pg-env и заполните реальными значениями
+
+POSTGRES_DB=queen_cosmo_db
+POSTGRES_USER=queen_cosmo_user
+POSTGRES_PASSWORD=ВАШ_РЕАЛЬНЫЙ_ПАРОЛЬ_ЗДЕСЬ
+POSTGRES_HOST=postgresql-db
+POSTGRES_PORT=5432
+
+# ⚠️ ВАЖНО:
+# 1. Скопируйте этот файл в .pg-env
+# 2. Замените placeholder'ы реальными значениями
+# 3. НИКОГДА не коммитьте .pg-env в Git!
+# 4. .pg-env должен быть в .gitignore
