@@ -1,0 +1,18 @@
+# Шаблон локальных переменных для Django проекта
+# Скопируйте этот файл в locals_vars.py и заполните реальными значениями
+
+# Django SECRET_KEY - сгенерируйте новый ключ!
+SECRET_KEY = 'ВАШ_НОВЫЙ_SECRET_KEY_ЗДЕСЬ'
+
+# PostgreSQL настройки
+PG_NAME = 'queen_cosmo_db'
+PG_USER = 'queen_cosmo_user'
+PG_PASSWORD = 'ВАШ_РЕАЛЬНЫЙ_ПАРОЛЬ_ЗДЕСЬ'
+PG_HOST = 'postgresql-db'
+PG_PORT = '5432'
+
+# ⚠️ ВАЖНО: 
+# 1. Скопируйте этот файл в locals_vars.py
+# 2. Замените placeholder'ы реальными значениями
+# 3. НИКОГДА не коммитьте locals_vars.py в Git!
+# 4. locals_vars.py должен быть в .gitignore
