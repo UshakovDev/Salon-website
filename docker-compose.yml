@@ -1,14 +1,10 @@
-version: "3.11"
-
 services:
   nginx:
     restart: always
     build:
         context: ./nginx
-    command: "/bin/sh -c 'while :; do sleep 6h & wait $${!}; nginx -s reload; done & nginx -g \"daemon off;\"'"    
     ports:
-        - "8080:80" # port exposed to outside world. 
-        - "8443:443" # <--- add this line
+        - "8080:80" # port exposed to outside world
         
     volumes:
         - ./persistentdata/certbot/conf:/etc/letsencrypt # <--here

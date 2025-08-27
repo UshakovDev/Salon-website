@@ -66,12 +66,20 @@ def certificates(request):
     })
 @cache_page(60 * 15)
 def policy(request):
-    Policy = PrivacyPolicy.objects.get(id=1)  # получаем выбранную политику конфиденциальности
-    data_collection = DataCollection.objects.filter(policy=Policy)  # получаем данные из DataCollection, связанные с этой политикой
-    third_party_data = ThirdPartyDataTransfer.objects.filter(policy=Policy)  # получаем данные из ThirdPartyDataTransfer, связанные с этой политикой
+    try:
+        # Пытаемся получить политику конфиденциальности
+        Policy = PrivacyPolicy.objects.get(id=1)
+        data_collection = DataCollection.objects.filter(policy=Policy)
+        third_party_data = ThirdPartyDataTransfer.objects.filter(policy=Policy)
+    except PrivacyPolicy.DoesNotExist:
+        # Если данных нет, используем пустые значения
+        Policy = None
+        data_collection = []
+        third_party_data = []
 
     return render(request, 'saloon/policy.html', {
         'title': 'Политика конфиденциальности | Салон красоты Зея Queen cosmo',
+        'policy': Policy,
         'data_collection': data_collection,
         'third_party_data': third_party_data
     })
