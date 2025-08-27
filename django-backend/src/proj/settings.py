@@ -154,7 +154,29 @@ CACHES = {
     }
 }
 
+# CSRF настройки для разработки
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:8080',
+    'http://127.0.0.1:8080',
+    'http://0.0.0.0:8080',
+]
 
+# Дополнительные настройки безопасности для разработки
+CSRF_COOKIE_SECURE = False
+SESSION_COOKIE_SECURE = False
+CSRF_COOKIE_HTTPONLY = False
+SESSION_COOKIE_HTTPONLY = False
+
+# Отключение проверки CSRF для разработки (осторожно!)
+if DEBUG:
+    CSRF_COOKIE_SECURE = False
+    SESSION_COOKIE_SECURE = False
+    CSRF_COOKIE_HTTPONLY = False
+    SESSION_COOKIE_HTTPONLY = False
+    
+    # В режиме отладки можно отключить проверку CSRF (только для разработки!)
+    # CSRF_USE_SESSIONS = False
+    # CSRF_COOKIE_NAME = 'csrftoken'
 
 #        "LOCATION": "/var/tmp/django_cache",
 

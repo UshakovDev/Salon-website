@@ -86,3 +86,4 @@ def policy(request):
 
 def pageNotFound(request, exception):
     return HttpResponseNotFound('<h1>Страница не найдена</h1>')  # ошибка 404
+
